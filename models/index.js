@@ -1,0 +1,55 @@
+'use strict';
+
+const fs = require('fs');
+const path = require('path');
+const Sequelize = require('sequelize');
+const basename = path.basename(__filename);
+const env = process.env.NODE_ENV || 'development';
+const config = require(__dirname + '/../config/config.json')[env];
+const db = {};
+var sequelize;
+
+sequelize = new Sequelize(
+  config.database,
+  config.username,
+  config.password,
+  config);
+
+fs
+  .readdirSync(__dirname)
+  .filter(file => {
+    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
+  })
+  .forEach(file => {
+    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
+    db[model.name] = model;
+  });
+
+Object.keys(db).forEach(modelName => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+});
+
+db.sequelize = sequelize;  // connection
+db.Sequelize = Sequelize;
+
+
+
+sequelize.authenticate().then(()=>{
+console.log("connection success");
+}).catch(error=>console.log(error.log))
+
+
+
+// db.users.drop()
+
+sequelize.sync()
+
+
+
+
+
+
+
+module.exports = db;
