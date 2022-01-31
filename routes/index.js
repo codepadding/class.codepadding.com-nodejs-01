@@ -2,11 +2,13 @@ const express = require('express')
 const router = express.Router()
 
 
-// http://localhost:4000/
+// https://class.codepadding.com/
 router.get("/",(req,res)=>{
     res.send("Wellcome to api")
 })
 
+
+https://class.codepadding.com/user
 router.use("/user",require('./user'))
 
 

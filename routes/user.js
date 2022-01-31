@@ -2,15 +2,15 @@ const express = require('express')
 const userController = require('../controller/userController')
 const router = express.Router()
 
-// http://localhost:4000/user/
+// https://class.codepadding.com/user
 router.get("/", userController.getAllUser)
 
 
-// http://localhost:4000/user/sign-up
+// https://class.codepadding.com/user/sign-up
 router.post("/sign-up", userController.userSignUp)
 
 
-// http://localhost:4000/user/login
+// https://class.codepadding.com/user/login
 router.post("/login", userController.userLogin)
 
 

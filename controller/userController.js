@@ -80,7 +80,7 @@ const userSignUp = async (req, res) => {
         const hash = bcrypt.hashSync(password, salt);
 
 
-        
+
         const result = await Users.create({
             name: name,
             email: email,
@@ -90,7 +90,13 @@ const userSignUp = async (req, res) => {
 
         console.log("result", result);
 
-        res.json(result)
+        res.json({
+            status: true,
+            message: "user registration successfully",
+            data: {
+                user: result
+            }
+        })
     } catch (error) {
         res.status(500).json({
             status: false,
@@ -256,7 +262,7 @@ const deleteUser = async (req, res) => {
 }
 
 
-const restore = async (req,res) => {
+const restore = async (req, res) => {
 
     try {
         const { userId } = req.body
@@ -273,7 +279,7 @@ const restore = async (req,res) => {
             where: {
                 id: userId,
             },
-            paranoid:false
+            paranoid: false
         })
 
         if (!user) {
@@ -306,7 +312,7 @@ const restore = async (req,res) => {
 }
 
 
-const hardDelete = async (req,res) => {
+const hardDelete = async (req, res) => {
 
     try {
         const { userId } = req.body
@@ -323,7 +329,7 @@ const hardDelete = async (req,res) => {
             where: {
                 id: userId
             },
-            paranoid:false
+            paranoid: false
         })
 
         if (!user) {
