@@ -118,18 +118,6 @@ const userLogin = async (req, res) => {
     }
 
 
-
-    const have = body.email.includes("@")
-
-
-    if (!have) {
-        return res.json({
-            status: false,
-            error: "enter a valid email address"
-        })
-    }
-
-
     const user = await Users.findOne({
         where: {
             email: body.email
@@ -145,7 +133,10 @@ const userLogin = async (req, res) => {
     }
 
 
-    if (user.password != body.password) {
+
+    const matchPassword = bcrypt.compareSync(body.password,user.password);
+
+    if (!matchPassword) {
         return res.json({
             status: false,
             error: "wrong password"
